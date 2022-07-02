@@ -6,28 +6,37 @@
 #    By: paolives <paolives@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 12:29:29 by paolives          #+#    #+#              #
-#    Updated: 2022/06/29 02:20:49 by paolives         ###   ########.fr        #
+#    Updated: 2022/06/30 13:36:56 by paolives         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
 
-SRCS	=	parcer.c
+SRCS	=	minishell.c parcer/parcer.c
 
 OBJ		=	$(SRCS:%.c=%.o)
+
+LIB		=	libft/libft.a
+
+LIBPATH	=	libft/
 
 INCLUDE	=	include/
 
 HEADER	=	minishell.h
+
+CC = gcc
 
 FLAGS	=	-Wall -Wextra -Werror 
 
 RM		= rm -rf
 
 
-.PHONY:		all	clean	fclean	re
+.PHONY:		all	clean	fclean	re libft
 
-all:		$(NAME)
+all:		libft $(NAME)
+
+libft:
+		@$(MAKE) -C $(LIBPATH)
 
 $(NAME):	$(OBJ)
 			$(CC) $(FLAGS) -lreadline $(OBJ) $(LIB) -o $(NAME)
@@ -37,9 +46,11 @@ $(NAME):	$(OBJ)
 
 
 clean:
-			@$(RM) $(OBJ)
+	make clean -C $(LIBPATH)
+	rm -rf $(OBJ) 
 
-fclean:		clean
-			@$(RM) $(NAME)
+fclean:	clean
+	make fclean -C $(LIBPATH)
+	$(RM) $(NAME)
 
-re:			fclean all
+re: fclean all
