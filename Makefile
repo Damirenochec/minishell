@@ -6,7 +6,7 @@
 #    By: paolives <paolives@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 12:29:29 by paolives          #+#    #+#              #
-#    Updated: 2022/06/30 13:36:56 by paolives         ###   ########.fr        #
+#    Updated: 2022/07/04 16:08:31 by paolives         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ HEADER	=	minishell.h
 
 CC = gcc
 
-FLAGS	=	-Wall -Wextra -Werror 
+FLAGS	=	#-Wall -Wextra -Werror 
 
 RM		= rm -rf
 

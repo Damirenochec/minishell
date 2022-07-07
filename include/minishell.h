@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:19:02 by paolives          #+#    #+#             */
-/*   Updated: 2022/07/02 19:47:34 by paolives         ###   ########.fr       */
+/*   Updated: 2022/07/04 16:14:57 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,18 @@
 
 // parcer
 
-typedef struct s_list
-{
-    char    *word;
-	struct s_list *next;
-}   t_list;
+// typedef struct s_list
+// {
+//     char    *word;
+// 	struct s_list *next;
+// }   t_list;
 
-//int     preparcer(char *str); проверка на валидность
-char    *gap(char *str, int *i); //оброботка '
-void    parcer(char **str); // обработка "
-char    *ft_slash(char *str, int *i); // обработка backslash
+
+char	*write_error(char *error);
+char	*ft_gap(char *str, int *i);
+char	*ft_double_gap(char *str, int *i);
+int		preparcer(char *str);
+int		parcer(char *str, char **env);
+char	*ft_dollar(char *str, int *i, char **env);
 
 #endif
