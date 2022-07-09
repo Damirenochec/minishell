@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 22:36:22 by paolives          #+#    #+#             */
-/*   Updated: 2022/07/04 18:39:47 by paolives         ###   ########.fr       */
+/*   Updated: 2022/07/09 03:19:11 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ char	*ft_dollar(char *str, int *i, char **env)
 	int		j;
 	int		l;
 	char	*tmp;
+	char	*ptr;
 	char	*tmp2;
 	char	*tmp3;
-	char	*ptr;
 
 	j = *i;
 	l = -1;
@@ -89,16 +89,28 @@ char	*ft_dollar(char *str, int *i, char **env)
 	if (*i == j + 1)
 		return (str);
 	tmp = ft_substr(str, j + 1, *i - j - 1);
-	printf("key = %s\n", tmp);
+	ptr = tmp;
+	tmp = ft_strjoin(tmp, "=");
+	free(ptr);
+	ptr = tmp;
 	while (env[++l])
 	{
 		if (ft_memcmp(env[l], tmp, ft_strlen(tmp)) == 0)
 		{
-			printf("NASHEL\n");
-			printf("%s\n", env[l]);
+			free(ptr);
+			ptr = tmp;
+			tmp = ft_substr(env[l], ft_strlen(tmp), ft_strlen(env[l]));
+			free(ptr);
+			ptr = tmp;
 		}
 	}
-	
+	tmp2 = ft_substr(str, 0, j);
+	tmp = ft_strjoin(tmp2, tmp);
+	free(ptr);
+	ptr = tmp;
+	tmp2 = ft_substr(str, *i, ft_strlen(str));
+	tmp = ft_strjoin(tmp, tmp2);
+	printf("5 %s\n", tmp);
 	return(str);
 }
 
