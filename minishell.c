@@ -35,5 +35,6 @@ int	main(int argc, char **argv, char **env)
 			free(a);
 		}
 	}
+	printf("HERE IS 111");
 	return (0);
 }
