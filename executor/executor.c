@@ -1,3 +1,7 @@
 #include "../include/minishell.h"
 
-void fsdfs
+void fsdfs (int a)
+{
+	a = a + 1;
+	return;
+}
