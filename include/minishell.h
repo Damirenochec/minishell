@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:19:02 by paolives          #+#    #+#             */
-/*   Updated: 2022/07/04 16:14:57 by paolives         ###   ########.fr       */
+/*   Updated: 2022/07/26 10:15:06 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,31 @@
     
 // }   t_info;
 
-// parcer
 
-// typedef struct s_list
-// {
-//     char    *word;
-// 	struct s_list *next;
-// }   t_list;
 
+
+typedef struct s_list
+{
+	char			*key;
+	char			*value;
+	struct s_list	*next;
+}	t_list;
+
+typedef struct s_info
+{
+	char	*entered_command;
+	t_list	*start;
+	char	**env;
+}	t_info;
+
+// lexer.c
 
 char	*write_error(char *error);
-char	*ft_gap(char *str, int *i);
-char	*ft_double_gap(char *str, int *i);
-int		preparcer(char *str);
-int		parcer(char *str, char **env);
-char	*ft_dollar(char *str, int *i, char **env);
+void	add_tokken(char *key, char *value, t_info *info);
+void	lexer(char *str, t_info *info);
+
+// parcer.c
+
+void	parcer(t_info *info);
 
 #endif
