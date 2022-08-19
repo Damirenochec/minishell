@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:19:02 by paolives          #+#    #+#             */
-/*   Updated: 2022/08/19 09:21:22 by paolives         ###   ########.fr       */
+/*   Updated: 2022/08/19 10:47:37 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@
 
 typedef struct s_info
 {
-	char	*entered_command;
 	t_list	*start;
 	char	**env;
 	t_list	*env_list;
@@ -45,8 +44,7 @@ typedef struct s_info
 // lexer.c
 
 char	*write_error(char *error);
-void	add_tokken(char *key, char *value, t_info *info);
-void	lexer(char *str, t_info *info);
+void	lexer(char *str, char **env);
 
 // parcer.c
 
@@ -54,5 +52,6 @@ void	parcer(t_info *info);
 
 // src.c
 void	free_info(t_info *info);
+t_info	*make_info(char **env);
 
 #endif
