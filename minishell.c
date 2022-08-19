@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:58:52 by paolives          #+#    #+#             */
-/*   Updated: 2022/07/26 10:15:29 by paolives         ###   ########.fr       */
+/*   Updated: 2022/08/19 09:20:29 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,8 @@ int	main(int argc, char **argv, char **env)
 		else
 		{
 			add_history(a);
-			info->entered_command = a;
 			lexer(a, info);
-			parcer(info);
+			//parcer(info);
 			free(a);
 		}	
 	}

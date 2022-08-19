@@ -6,13 +6,13 @@
 #    By: paolives <paolives@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 12:29:29 by paolives          #+#    #+#              #
-#    Updated: 2022/07/26 10:15:09 by paolives         ###   ########.fr        #
+#    Updated: 2022/08/19 08:58:16 by paolives         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
 
-SRCS	=	minishell.c parcer/lexer.c parcer/parcer.c
+SRCS	=	minishell.c parcer/lexer.c parcer/parcer.c src.c
 
 OBJ		=	$(SRCS:%.c=%.o)
 

@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:19:02 by paolives          #+#    #+#             */
-/*   Updated: 2022/07/26 10:15:06 by paolives         ###   ########.fr       */
+/*   Updated: 2022/08/19 09:21:22 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,12 @@
     
 // }   t_info;
 
-
-
-
-typedef struct s_list
-{
-	char			*key;
-	char			*value;
-	struct s_list	*next;
-}	t_list;
-
 typedef struct s_info
 {
 	char	*entered_command;
 	t_list	*start;
 	char	**env;
+	t_list	*env_list;
 }	t_info;
 
 // lexer.c
@@ -60,5 +51,8 @@ void	lexer(char *str, t_info *info);
 // parcer.c
 
 void	parcer(t_info *info);
+
+// src.c
+void	free_info(t_info *info);
 
 #endif

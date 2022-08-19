@@ -6,141 +6,102 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 10:11:39 by paolives          #+#    #+#             */
-/*   Updated: 2022/07/26 10:20:38 by paolives         ###   ########.fr       */
+/*   Updated: 2022/08/19 10:29:30 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*write_error(char *error)
-{
-	printf("%s\n", error);
-	return(NULL);
-}
-
 void	add_tokken(char *key, char *value, t_info *info)
 {
-	t_list *list;
-	t_list *ptr;
+	ft_lstadd_back(&(info->start), ft_lstnew(key, value));
+}
 
-	list = malloc(sizeof(t_list));
-	list->key = key;
-	list->value = value;
-	list->next = NULL;
-	ptr = list;
-	if (info->start == NULL)
+int	parce_quotes(char *quotes, char *str, int i, t_info *info)
+{
+	int	j;
+
+	j = i;
+	while (str[++i])
 	{
-		info->start = list;
+		if (str[i] == *quotes)
+			break ;
+		else if (str[i + 1] == '\0')
+		{
+			write_error("alone gap");
+			add_tokken(quotes, NULL, info);
+			return (j);
+		}
+	}
+	add_tokken(quotes, ft_substr(str, j + 1, i - j - 1), info);
+	return (i);
+}
+
+int	parce_angle_brackets(char *brackets, char *str, int i, t_info *info)
+{
+	if (ft_strncmp(str + i, "<<", 2) == 0)
+	{
+		add_tokken("<<", NULL, info);
+		i++;
+	}
+	else if (ft_strncmp(str + i, ">>", 2) == 0)
+	{
+		add_tokken(">>", NULL, info);
+		i++;
 	}
 	else
+		add_tokken(brackets, NULL, info);
+	return (i);
+}
+
+int	parce_word(char *str, int i, t_info *info)
+{
+	int	j;
+
+	j = i;
+	while (str[i++])
 	{
-		ptr = info->start;
-		while (ptr->next)
+		if (str[i] == '>' || (str[i] == '>' && str[i + 1] == '>')
+			|| str[i] == '<' || (str[i] == '<' && str[i + 1] == '<')
+			|| str[i] == '|' || str[i] == '$' || str[i] == '\''
+			|| str[i] == ' ' || str[i] == '\t' || str[i] == '\0')
 		{
-			ptr = ptr->next;
+			add_tokken("word", ft_substr(str, j, i - j), info);
+			i--;
+			break ;
 		}
-		ptr->next = list;
-		
 	}
+	return (i);
 }
 
 void	lexer(char *str, t_info *info)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	str = ft_strtrim(str, " \t\n\v\f\r");
 	i = -1;
-	while(str[++i]) {
+	while (str[++i])
+	{
 		if (str[i] == '|')
 			add_tokken("|", NULL, info);
 		else if (str[i] == '>')
-		{
-			if (str[i + 1] == '>')
-			{
-				add_tokken(">>", NULL, info);
-				i++;
-			}
-			else
-				add_tokken(">", NULL, info);
-		}
+			i = parce_angle_brackets(">", str, i, info);
 		else if (str[i] == '<')
-		{
-			if (str[i + 1] == '<')
-			{
-				add_tokken("<<", NULL, info);
-				i++;
-			}
-			else
-				add_tokken("<", NULL, info);
-		}
+			i = parce_angle_brackets("<", str, i, info);
 		else if (str[i] == '\'')
-		{
-			j = i;
-			while (str[++i])
-			{
-				if (str[i] == '\'')
-					break;
-				else if (str[i + 1] == '\0')
-				{
-					break;
-				}
-			}
-			add_tokken("word", ft_substr(str, j + 1, i - j - 1), info);
-		}
+			i = parce_quotes("\'", str, i, info);
 		else if (str[i] == '\"')
+			i = parce_quotes("\"", str, i, info);
+		else if (str[i] == ' ')
 		{
-			j = i;
-			while (str[++i])
-			{
-				if (str[i] == '\"')
-					break;
-				else if (str[i + 1] == '\0')
-				{
-					break;
-				}
-			}
-			add_tokken("word", ft_substr(str, j + 1, i - j - 1), info);
+			while (str[i++] == ' ');
+			add_tokken("space", NULL, info);
+			i -= 2;
 		}
-		else if (str[i] == '$')
-		{
-			j = i;
-			if (str[i + 1] == '?')
-				add_tokken("$?", NULL, info);
-			else
-			{
-				while (str[++i])
-					if (str[i] == '_' || ft_isalnum(str[i] == 0) || str[i] == '$' || str[i] == ' ')
-						break;
-				if (i == j + 1)
-				{
-					i = j;
-					add_tokken("word", "$", info);
-				}
-				else
-					add_tokken("$", ft_substr(str, j + 1, i - j - 1), info);
-			}
-		}
-		else if (str[i] == ' ' || str[i] == '\t')
-		{}
 		else
-		{
-			j = i;
-			while (str[i++])
-			{
-				if (str[i] == '>' || (str[i] == '>' && str[i + 1] == '>') || str[i] == '<' || (str[i] == '<' && str[i + 1] == '<') || str[i] == '|' || str[i] == '$' || str[i] == '\'' || str[i] == ' ' || str[i] == '\t' || str[i] == '\0')
-				{
-					add_tokken("word", ft_substr(str, j, i - j), info);
-					i--;
-					break;
-				}
-			}
-		}
+			i = parce_word(str, i, info);
 	}
-	// while (info->start != NULL)
-	// {
-	// 	printf("%s %s\n", info->start->key, info->start->value);
-	// 	info->start = info->start->next;
-	// }
-	
+	free_info(info);
+	free(str);
 }

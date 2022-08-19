@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
+/*   src.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/28 00:28:48 by ufitzhug          #+#    #+#             */
-/*   Updated: 2022/08/19 06:14:15 by paolives         ###   ########.fr       */
+/*   Created: 2022/08/19 08:48:34 by paolives          #+#    #+#             */
+/*   Updated: 2022/08/19 10:26:15 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "include/minishell.h"
 
-t_list	*ft_lstnew(void *key, void *value)
+char	*write_error(char *error)
 {
-	t_list	*new_elem;
+	printf("%s\n", error);
+	return (NULL);
+}
 
-	new_elem = (t_list *)malloc(sizeof(*new_elem));
-	if (!new_elem)
-		return (NULL);
-	new_elem->key = key;
-	new_elem->value = value;
-	new_elem->next = NULL;
-	return (new_elem);
+void	free_info(t_info *info)
+{
+	t_list	*ptr;
+	while (info->start)
+	{
+		ptr = info->start;
+		info->start = info->start->next;
+		if (ptr->value != NULL)
+			free(ptr->value);
+		free(ptr);
+	}
+	free(info);
 }

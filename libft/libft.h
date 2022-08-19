@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paolives <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 10:21:11 by paolives          #+#    #+#             */
-/*   Updated: 2022/03/28 20:35:43 by paolives         ###   ########.fr       */
+/*   Updated: 2022/08/19 08:55:43 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,12 @@ char	*get_next_line(int fd);
 
 typedef struct s_list
 {
-	void			*content;
+	void			*key;
+	void			*value;
 	struct s_list	*next;
 }	t_list;
 
-t_list	*ft_lstnew(void *content);
+t_list	*ft_lstnew(void *key, void *value);
 void	ft_lstadd_front(t_list **lst, t_list *new);
 int		ft_lstsize(t_list *lst);
 t_list	*ft_lstlast(t_list *lst);

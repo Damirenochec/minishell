@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ufitzhug <ufitzhug@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 00:27:51 by ufitzhug          #+#    #+#             */
-/*   Updated: 2021/10/30 23:29:07 by ufitzhug         ###   ########.fr       */
+/*   Updated: 2022/08/19 06:17:02 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_lstclear(t_list **lst, void (*del)(void*))
 	{
 		temp = begin;
 		begin = begin->next;
-		del(temp->content);
+		del(temp->key);
 		free(temp);
 	}
 	*lst = NULL;
