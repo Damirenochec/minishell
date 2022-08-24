@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 08:48:34 by paolives          #+#    #+#             */
-/*   Updated: 2022/08/24 05:14:21 by paolives         ###   ########.fr       */
+/*   Updated: 2022/08/24 08:23:57 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,8 @@ void	*envp_search(char *str, t_list *list)
 		if (ft_strncmp(str, list->key, ft_strlen(str)) == 0)
 			return(list->value);
 		list = list->next;
-		return(NULL);
 	}
-	
+	return(NULL);
 }
 
 int	ft_strichr(const char *s, int c)
@@ -123,8 +122,10 @@ char	*cutsubstr(char *str, int cut, int end)
 	pre = ft_substr(str, 0, cut);
 	post = ft_substr(str, end + 1, ft_strlen(str) - end + 1);
 	str = ft_strjoin(pre, post);
-	free(pre);
-	free(post);
+	if (pre != NULL)
+		free(pre);
+	if (post != NULL)
+		free(post);
 	return(str);
 }
 
@@ -141,5 +142,18 @@ char	*putsubstr(char *str, int index, char *sub)
 	str = ft_strjoin(str, post);
 	free(post);
 	free(pre);
+	return(str);
+}
+
+char	*replacesubstr(char *str, int start, int end, char *sub)
+{
+	char	*ptr;
+
+	ptr = str;
+	str = cutsubstr(str, start, end);
+	free(ptr);
+	ptr = str;
+	str = putsubstr(str, start, sub);
+	free(ptr);
 	return(str);
 }

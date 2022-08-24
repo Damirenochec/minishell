@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 10:11:39 by paolives          #+#    #+#             */
-/*   Updated: 2022/08/24 05:18:42 by paolives         ###   ########.fr       */
+/*   Updated: 2022/08/24 08:18:29 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ int	parce_word(char *str, int i, t_info *info)
 		if (str[i] == '>' || (str[i] == '>' && str[i + 1] == '>')
 			|| str[i] == '<' || (str[i] == '<' && str[i + 1] == '<')
 			|| str[i] == '|' || str[i] == '\'' || str[i] == '\"'
-			|| str[i] == '\t' || str[i] == '\0' || str[i] == '\n')
+			|| str[i] == '\t' || str[i] == '\0' || str[i] == '\n'
+			|| str[i] == ' ')
 		{
 			new_str = ft_substr(str, j, i - j);
 			new_str = parce_dollar(new_str, info);
@@ -88,6 +89,7 @@ int	parce_space(char *str, int i, t_info *info)
 char	*parce_dollar(char *str, t_info *info)
 {
 	int		i;
+	int		j;
 	char	*new_str;
 	char	*ptr;
 	char	*pid;
@@ -110,9 +112,28 @@ char	*parce_dollar(char *str, t_info *info)
 			str = putsubstr(str, i, pid);
 			free(pid);
 			free(ptr);
-			i = 0;
-			//printf("%s\n", str);
 		}
+		else if (*(str + i + 1) == '_' || ft_isalnum(*(str + i + 1))
+			|| ft_isalpha(*(str + i + 1)))
+		{
+			j = i;
+			while (*(str + i + 1) == '_' || ft_isalnum(*(str + i + 1))
+				|| ft_isalpha(*(str + i + 1)))
+			{
+				i++;
+			}
+			new_str = ft_substr(str, j + 1, i - j);
+			ptr = new_str;
+			new_str = envp_search(new_str, info->env_list);
+			free(ptr);
+			ptr = str;
+			str = cutsubstr(str, j, i);
+			free(ptr);
+			ptr = str;
+			str = putsubstr(str, j, new_str);
+			free(ptr);
+		}
+		i++;
 	}
 	return (str);
 }
