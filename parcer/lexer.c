@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 10:11:39 by paolives          #+#    #+#             */
-/*   Updated: 2022/08/24 08:18:29 by paolives         ###   ########.fr       */
+/*   Updated: 2022/08/27 09:42:28 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	parce_quotes(char *quotes, char *str, int i, t_info *info)
 {
 	int		j;
 	char	*new_str;
+	char	*ptr;
 
 	j = i;
 	while (str[++i])
@@ -29,9 +30,10 @@ int	parce_quotes(char *quotes, char *str, int i, t_info *info)
 			return (j);
 		}
 	}
-	str = ft_substr(str, j + 1, i - j - 1);
-	parce_dollar(str, info);
-	ft_lstadd_back(&(info->start), ft_lstnew(quotes, str));
+	new_str = ft_substr(str, j + 1, i - j - 1);
+	if (*quotes == '\"')
+		new_str = parce_dollar(new_str, info);
+	ft_lstadd_back(&(info->start), ft_lstnew(quotes, new_str));
 	return (i);
 }
 
@@ -56,6 +58,7 @@ int	parce_word(char *str, int i, t_info *info)
 {
 	int		j;
 	char	*new_str;
+	char	*ptr;
 
 	j = i;
 	while (str[i++])
@@ -67,6 +70,7 @@ int	parce_word(char *str, int i, t_info *info)
 			|| str[i] == ' ')
 		{
 			new_str = ft_substr(str, j, i - j);
+			ptr = new_str;
 			new_str = parce_dollar(new_str, info);
 			ft_lstadd_back(&(info->start), ft_lstnew("word", new_str));
 			i--;
@@ -94,46 +98,41 @@ char	*parce_dollar(char *str, t_info *info)
 	char	*ptr;
 	char	*pid;
 
-	while (ft_strichr(str, '$') != -1)
+	i = -1;
+	while (str[++i])
 	{
-		i = ft_strichr(str, '$');
-		if (i == -1)
-			return (str);
-		if (*(str + i + 1) == '$' || *(str + i + 1) == '?')
+		while (str[i] != '$' && str[i])
+			i++;
+		if (str[i + 1] == '$' || str[i + 1] == '?')
+		{
+			if (str[i + 1] == '$')
+				new_str = ft_itoa(getpid());
+			else if (str[i + 1] == '?')
+				new_str = ft_itoa(info->status);
+			ptr = str;
+			str = replacesubstr(str, i, i + 1, new_str);
+			free(new_str);
+			free(ptr);
+		}
+		else if (ft_isdigit(str[i + 1]))
 		{
 			ptr = str;
 			str = cutsubstr(str, i, i + 1);
 			free(ptr);
-			ptr = str;
-			if (*(str + i + 1) == '$')
-				pid = ft_itoa(getpid());
-			else if (*(str + i + 1) == '?')
-				pid = ft_itoa(info->status);
-			str = putsubstr(str, i, pid);
-			free(pid);
-			free(ptr);
 		}
-		else if (*(str + i + 1) == '_' || ft_isalnum(*(str + i + 1))
-			|| ft_isalpha(*(str + i + 1)))
+		else if (str[i + 1] == '_' || ft_isalnum(str[i + 1]))
 		{
 			j = i;
-			while (*(str + i + 1) == '_' || ft_isalnum(*(str + i + 1))
-				|| ft_isalpha(*(str + i + 1)))
-			{
+			while (str[i + 1] == '_' || ft_isalnum(str[i + 1]))
 				i++;
-			}
 			new_str = ft_substr(str, j + 1, i - j);
 			ptr = new_str;
 			new_str = envp_search(new_str, info->env_list);
 			free(ptr);
 			ptr = str;
-			str = cutsubstr(str, j, i);
-			free(ptr);
-			ptr = str;
-			str = putsubstr(str, j, new_str);
+			str = replacesubstr(str, j, i, new_str);
 			free(ptr);
 		}
-		i++;
 	}
 	return (str);
 }

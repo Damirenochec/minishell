@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 08:48:34 by paolives          #+#    #+#             */
-/*   Updated: 2022/08/24 08:23:57 by paolives         ###   ########.fr       */
+/*   Updated: 2022/08/27 09:04:59 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,22 @@ char	*write_error(char *error)
 	return (NULL);
 }
 
-void	free_info(t_info *info)
+void	free_list(t_list *list, int i)
 {
 	t_list	*ptr;
-	while (info->start)
+
+	while (list != NULL)
 	{
-		ptr = info->start;
-		info->start = info->start->next;
-		if (ptr->value != NULL)
-			free(ptr->value);
+		if (i == 2 && list->key != NULL)
+			free(list->key);
+		if (list->value != NULL)
+			free(list->value);
+		ptr = list;
+		list = list->next;
+		ptr->next = NULL;
 		free(ptr);
 	}
-	while (info->env_list)
-	{
-		ptr = info->env_list;
-		info->env_list = info->env_list->next;
-		if (ptr->value != NULL)
-		{
-			free(ptr->key);
-			free(ptr->value);
-		}
-		free(ptr);
-	}
+	//list = NULL;
 }
 
 void	parce_env(t_info *info)
@@ -84,6 +78,7 @@ t_info	*make_info(char **env)
 	info->env_list = NULL;
 	parce_env(info);
 	info->start = NULL;
+	info->status = 0;
 }
 
 void	*envp_search(char *str, t_list *list)
@@ -114,46 +109,4 @@ int	ft_strichr(const char *s, int c)
 	return (-1);
 }
 
-char	*cutsubstr(char *str, int cut, int end)
-{
-	char	*pre;
-	char	*post;
 
-	pre = ft_substr(str, 0, cut);
-	post = ft_substr(str, end + 1, ft_strlen(str) - end + 1);
-	str = ft_strjoin(pre, post);
-	if (pre != NULL)
-		free(pre);
-	if (post != NULL)
-		free(post);
-	return(str);
-}
-
-char	*putsubstr(char *str, int index, char *sub)
-{
-	char	*pre;
-	char	*post;
-
-	pre = ft_substr(str, 0, index);
-	post = ft_substr(str, index, ft_strlen(str) - index);
-	str = ft_strjoin(pre, sub);
-	free(pre);
-	pre = str;
-	str = ft_strjoin(str, post);
-	free(post);
-	free(pre);
-	return(str);
-}
-
-char	*replacesubstr(char *str, int start, int end, char *sub)
-{
-	char	*ptr;
-
-	ptr = str;
-	str = cutsubstr(str, start, end);
-	free(ptr);
-	ptr = str;
-	str = putsubstr(str, start, sub);
-	free(ptr);
-	return(str);
-}
