@@ -19,7 +19,8 @@
 #include <readline/history.h>
 #include <stdlib.h>
 #include "../libft/libft.h"
-
+# define SUCCESS 0
+# define ERROR 1
 
 // typedef int (&t_builtin_ptr)(t_llist, t_info);
 // typedef struct s_info
