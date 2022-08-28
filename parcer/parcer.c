@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-void	parcer(t_info *info)
+void	paechorcer(t_info *info)
 {
 	
 	//ft_lstadd_back(&(info->cmd_list), ft_lstnew(info->start->key, NULL));
