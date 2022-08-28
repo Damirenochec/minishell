@@ -27,8 +27,12 @@ void	ft_echo(t_list *cmd_list)
 		while (cmd_list->value[i])
 		{
 			printf("%s", cmd_list->value[i]);
+			if (cmd_list->value[i + 1] && cmd_list->value[i][0] != '\0' )
+					printf(' ');
 			i++;
 		}
 	}
+	if (newline == 0)
+		printf('\n');
 	return;
 }
