@@ -66,4 +66,9 @@ char	*putsubstr(char *str, int index, char *sub);
 char	*replacesubstr(char *str, int start, int end, char *sub);
 
 
+// executor
+
+void	executor(t_list *cmd_list);
+
+
 #endif
