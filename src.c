@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 08:48:34 by paolives          #+#    #+#             */
-/*   Updated: 2022/08/27 09:04:59 by paolives         ###   ########.fr       */
+/*   Updated: 2022/08/28 20:32:06 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,12 @@ void	*envp_search(char *str, t_list *list)
 {
 	while (list)
 	{
-		if (ft_strncmp(str, list->key, ft_strlen(str)) == 0)
+		if (ft_strncmp(str, list->key, ft_strlen(list->key)) == 0
+			&& ft_strlen(str) == ft_strlen(list->key))
 			return(list->value);
 		list = list->next;
 	}
-	return(NULL);
+	return("");
 }
 
 int	ft_strichr(const char *s, int c)
