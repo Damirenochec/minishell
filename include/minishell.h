@@ -69,6 +69,8 @@ char	*replacesubstr(char *str, int start, int end, char *sub);
 // executor
 
 void	executor(t_list *cmd_list);
+size_t	ft_has_builtin(t_list *cmd_list);
+void	ft_exec_buitin(t_list *cmd_list);
 
 
 #endif
