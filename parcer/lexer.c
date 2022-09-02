@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 10:11:39 by paolives          #+#    #+#             */
-/*   Updated: 2022/08/27 09:42:28 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/01 16:39:50 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ int	parce_quotes(char *quotes, char *str, int i, t_info *info)
 		else if (str[i + 1] == '\0')
 		{
 			write_error("alone gap");
-			ft_lstadd_back(&(info->start), ft_lstnew(quotes, NULL));
+			ft_lstadd_back(&(info->start), ft_lstnew("word", NULL));
 			return (j);
 		}
 	}
 	new_str = ft_substr(str, j + 1, i - j - 1);
 	if (*quotes == '\"')
 		new_str = parce_dollar(new_str, info);
-	ft_lstadd_back(&(info->start), ft_lstnew(quotes, new_str));
+	ft_lstadd_back(&(info->start), ft_lstnew("word", new_str));
 	return (i);
 }
 
