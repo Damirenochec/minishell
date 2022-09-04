@@ -4,9 +4,9 @@
  * Нужно сделать проект таким образом
  * Первая функция - распознает тип key
  * После парсера есть следующие типы key
- * 1) REDIRECT
- * 2) PIPE
- * 3) COMMAND
+ * 1) word
+ * 2) <   >    <<    >> - т.е. редиректы
+ * 3) |  - т.е. пайп
  *
  * Еще нужно подумать про реализацию функции EXPORT
  * Она записывает новую переменную в окружение
@@ -24,11 +24,19 @@ void	ft_exec_cmd(t_list *cmd_list)
 
 void	executor(t_list *cmd_list)
 {
-	if (cmd_list->key == PIPE)
+	if (ft_strncmp(cmd_list->key, "|", 1))
 		ft_pipe(cmd_list);
-	else if (cmd_list->key == REDIRECT)
+	else if (ft_strncmp(cmd_list->key, "<", 1))
 		ft_redir(cmd_list);
-	else
+	else if (ft_strncmp(cmd_list->key, ">", 1))
+		ft_redir(cmd_list);
+	else if (ft_strncmp(cmd_list->key, ">>", 2))
+		ft_redir(cmd_list);
+	else if (ft_strncmp(cmd_list->key, "<<", 2))
+		ft_redir(cmd_list);
+	else if (ft_strncmp(cmd_list->key, "<<", 2))
+		ft_redir(cmd_list);
+	else if (ft_strncmp(cmd_list->key, "word", 4))
 		ft_exec_cmd(cmd_list);
 	return ;
 }
