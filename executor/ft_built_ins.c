@@ -26,7 +26,7 @@ void	ft_exec_builtin(t_list *cmd_list)
 	if (ft_strncmp(cmd_list->value[0], "cd", 2) == 0)
 		ft_cd (cmd_list);
 	if (ft_strncmp(cmd_list->value[0], "pwd", 3) == 0)
-		ft_pwd (cmd_list);
+		ft_pwd (void);
 	if (ft_strncmp(cmd_list->value[0], "export", 6) == 0)
 		ft_export (cmd_list);
 	if (ft_strncmp(cmd_list->value[0], "unset", 5) == 0)

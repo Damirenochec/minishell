@@ -34,5 +34,5 @@ int	ft_echo(t_list *cmd_list)
 	}
 	if (newline == 0)
 		printf('\n');
-	return (0);
+	return (SUCCESS);
 }

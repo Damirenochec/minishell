@@ -7,8 +7,8 @@ int	ft_pwd(void)
 	if (getcwd(path, PATH_MAX))
 	{
 		printf("%s", path);
-		return (0);
+		return (SUCCESS);
 	}
 	else
-		return (1);
+		return (ERROR);
 }
