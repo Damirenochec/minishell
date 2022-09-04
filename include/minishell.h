@@ -21,6 +21,7 @@
 #include "../libft/libft.h"
 # define SUCCESS 0
 # define ERROR 1
+# define PATH_MAX 4096
 
 // typedef int (&t_builtin_ptr)(t_llist, t_info);
 // typedef struct s_info
@@ -80,7 +81,8 @@ size_t	ft_has_builtin(t_list *cmd_list);
 
 // built-ins
 void	ft_exec_builtin(t_list *cmd_list);
-void	ft_echo(t_list *cmd_list);
+int		ft_echo(t_list *cmd_list);
+int		ft_pwd(void);
 
 
 #endif

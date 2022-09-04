@@ -10,7 +10,7 @@ static int	ft_nb_args(t_list *cmd_list)
 	return (i);
 }
 
-void	ft_echo(t_list *cmd_list)
+int	ft_echo(t_list *cmd_list)
 {
 	size_t	i;
 	size_t	newline;
@@ -34,5 +34,5 @@ void	ft_echo(t_list *cmd_list)
 	}
 	if (newline == 0)
 		printf('\n');
-	return;
+	return (0);
 }
