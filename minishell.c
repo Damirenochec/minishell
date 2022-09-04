@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:58:52 by paolives          #+#    #+#             */
-/*   Updated: 2022/08/28 20:42:59 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/04 15:28:42 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 
 // после запуска программы он выведет строку "my_shell->" и будет
 // ждать ввода и выведет введенную строку в терминал
+
+char	*write_error(char *error)
+{
+	printf("%s\n", error);
+	return (NULL);
+}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -38,7 +44,7 @@ int	main(int argc, char **argv, char **env)
 		{
 			add_history(a);
 			lexer(a, info);
-			//parcer(info);
+			parcer(info);
 			ptr = info->start;
 			while (ptr)
 			{

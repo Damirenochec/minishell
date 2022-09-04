@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 08:33:19 by paolives          #+#    #+#             */
-/*   Updated: 2022/08/27 08:46:36 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/04 08:13:03 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*cutsubstr(char *str, int cut, int end)
 		free(pre);
 	if (post != NULL)
 		free(post);
-	return(str);
+	return (str);
 }
 
 char	*putsubstr(char *str, int index, char *sub)
@@ -40,7 +40,7 @@ char	*putsubstr(char *str, int index, char *sub)
 	str = ft_strjoin(str, post);
 	free(post);
 	free(pre);
-	return(str);
+	return (str);
 }
 
 char	*replacesubstr(char *str, int start, int end, char *sub)
@@ -51,6 +51,52 @@ char	*replacesubstr(char *str, int start, int end, char *sub)
 	ptr = str;
 	str = putsubstr(str, start, sub);
 	free(ptr);
-	return(str);
+	return (str);
 }
 
+void	concatenation_strings(t_info *info)
+{
+	t_list	*tokken;
+	t_list	*ptr;
+	char	*str;
+
+	tokken = info->start;
+	while (tokken)
+	{
+		while (tokken->next && !ft_strncmp(tokken->key, "word", 4)
+			&& !ft_strncmp(tokken->next->key, "word", 4))
+		{
+			ptr = tokken->next;
+			str = tokken->value;
+			tokken->value = ft_strjoin(tokken->value, tokken->next->value);
+			free(str);
+			str = tokken->next->value;
+			tokken->next = tokken->next->next;
+			free(str);
+			free(ptr);
+		}
+		if (tokken->next == NULL)
+			break ;
+		tokken = tokken->next;
+	}
+}
+
+void	delite_space(t_info *info)
+{
+	t_list	*tokken;
+	t_list	*ptr;
+
+	tokken = info->start;
+	while (tokken)
+	{
+		if (tokken->next && !ft_strncmp(tokken->next->key, "space", 5))
+		{
+			ptr = tokken->next;
+			tokken->next = tokken->next->next;
+			free(ptr);
+		}
+		if (tokken->next == NULL)
+			break ;
+		tokken = tokken->next;
+	}
+}

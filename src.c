@@ -6,17 +6,11 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 08:48:34 by paolives          #+#    #+#             */
-/*   Updated: 2022/08/28 20:32:06 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/04 08:59:58 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
-
-char	*write_error(char *error)
-{
-	printf("%s\n", error);
-	return (NULL);
-}
 
 void	free_list(t_list *list, int i)
 {
@@ -33,7 +27,6 @@ void	free_list(t_list *list, int i)
 		ptr->next = NULL;
 		free(ptr);
 	}
-	//list = NULL;
 }
 
 void	parce_env(t_info *info)
@@ -43,7 +36,7 @@ void	parce_env(t_info *info)
 	int		index;
 	char	*key;
 	char	*value;
-	
+
 	envp = info->env;
 	while (*envp)
 	{
@@ -52,7 +45,7 @@ void	parce_env(t_info *info)
 		while (*str)
 		{
 			if (*str == '=')
-				break;
+				break ;
 			str++;
 			index++;
 		}
@@ -61,7 +54,6 @@ void	parce_env(t_info *info)
 		ft_lstadd_back(&(info->env_list), ft_lstnew(key, value));
 		envp++;
 	}
-	
 }
 
 t_info	*make_info(char **env)
@@ -87,10 +79,10 @@ void	*envp_search(char *str, t_list *list)
 	{
 		if (ft_strncmp(str, list->key, ft_strlen(list->key)) == 0
 			&& ft_strlen(str) == ft_strlen(list->key))
-			return(list->value);
+			return (list->value);
 		list = list->next;
 	}
-	return("");
+	return ("");
 }
 
 int	ft_strichr(const char *s, int c)
@@ -109,5 +101,3 @@ int	ft_strichr(const char *s, int c)
 	}
 	return (-1);
 }
-
-

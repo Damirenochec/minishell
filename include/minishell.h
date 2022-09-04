@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:19:02 by paolives          #+#    #+#             */
-/*   Updated: 2022/08/24 10:11:09 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/04 08:16:15 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 #include <readline/history.h>
 #include <stdlib.h>
 #include "../libft/libft.h"
-
+# define SUCCESS 0
+# define ERROR 1
 
 // typedef int (&t_builtin_ptr)(t_llist, t_info);
 // typedef struct s_info
@@ -51,6 +52,7 @@ int		parce_space(char *str, int i, t_info *info);
 char	*parce_dollar(char *str,t_info *info);
 void	lexer(char *str, t_info *info);
 
+
 // parcer.c
 void	parcer(t_info *info);
 
@@ -61,9 +63,20 @@ char	*write_error(char *error);
 void	free_list(t_list *list, int i);
 void	*envp_search(char *str, t_list *list);
 int		ft_strichr(const char *s, int c);
+
+// stringsthings.c
 char	*cutsubstr(char *str, int cut, int end);
 char	*putsubstr(char *str, int index, char *sub);
 char	*replacesubstr(char *str, int start, int end, char *sub);
+void	concatenation_strings(t_info *info);
+void	delite_space(t_info *info);
+
+
+// executor
+
+void	executor(t_list *cmd_list);
+size_t	ft_has_builtin(t_list *cmd_list);
+void	ft_exec_buitin(t_list *cmd_list);
 
 
 #endif
