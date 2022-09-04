@@ -76,7 +76,11 @@ void	delite_space(t_info *info);
 
 void	executor(t_list *cmd_list);
 size_t	ft_has_builtin(t_list *cmd_list);
-void	ft_exec_buitin(t_list *cmd_list);
+
+
+// built-ins
+void	ft_exec_builtin(t_list *cmd_list);
+void	ft_echo(t_list *cmd_list);
 
 
 #endif
