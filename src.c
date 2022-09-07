@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 08:48:34 by paolives          #+#    #+#             */
-/*   Updated: 2022/09/04 08:59:58 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/07 06:51:46 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ void	free_list(t_list *list, int i)
 	{
 		if (i == 2 && list->key != NULL)
 			free(list->key);
-		if (list->value != NULL)
+		if (i == 3 && get_type_tokken(list->key) == 6)
+		{
+			free_array(list->value);
+		}	
+		else if (list->value != NULL)
 			free(list->value);
 		ptr = list;
 		list = list->next;

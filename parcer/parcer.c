@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 22:36:22 by paolives          #+#    #+#             */
-/*   Updated: 2022/09/04 15:28:26 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/07 05:55:33 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,35 +30,31 @@ int	get_type_tokken(char *tokken)
 		return (0);
 }
 
-char	**add_cmd_arg(char **cmd,char *arg)
+char	**lst_to_arr(t_list *list)
 {
+	char	**str;
 	char	**ptr;
-	char	**ptr2;
-	if (cmd == NULL)
+
+	str = malloc((ft_lstsize(list) + 1) * sizeof(char *));
+	ptr = str;
+	while (list)
 	{
-		ptr = cmd;
-		cmd = malloc(sizeof(char*) * 2);
-		*cmd = arg;
-		*(cmd + 1) = NULL;
-		free(ptr);
-		return (cmd);
+		*str = list->value;
+		str++;
+		list = list->next;
 	}
-	else
+	*str = NULL;
+	return (ptr);
+}
+
+void print_mass(char **str)
+{
+	while (*str)
 	{
-		ptr = malloc(sizeof(cmd) + sizeof(char*));
-		ptr2 = ptr;
-		while (*cmd)
-		{
-			*ptr = *cmd;
-			ptr++;
-			cmd++;
-		}
-		*ptr = arg;
-		ptr++;
-		*ptr = NULL;
-		free(cmd);
-		return(ptr2);
+		printf("mass %s\n", *str);
+		str++;
 	}
+	
 }
 
 void	parcer(t_info *info)
@@ -67,7 +63,7 @@ void	parcer(t_info *info)
 	t_list	*open_rd;
 	t_list	*close_rd;
 	t_list	*ptr;
-	char	**str;
+	t_list	*str;
 	int		i;
 	int		j;
 
@@ -77,11 +73,11 @@ void	parcer(t_info *info)
 	close_rd = NULL;
 	if (get_type_tokken(list->key) == 5)
 		write_error("syntax error near unexpected token \'|\'");
-	while (ptr)
+	while (list)
 	{
-		if (get_type_tokken(list->key) == 1 && get_type_tokken(list->key) == 3)
+		if (get_type_tokken(list->key) >= 1 && get_type_tokken(list->key) <= 4)
 		{
-			if (get_type_tokken(list->next->key) == 6)
+			if (list->next && get_type_tokken(list->next->key) == 6)
 			{
 				if (get_type_tokken(list->key) == 2 || get_type_tokken(list->key) == 4)
 					ft_lstadd_back(&open_rd, ft_lstnew(list->key, list->next->value));
@@ -92,19 +88,33 @@ void	parcer(t_info *info)
 			else
 				write_error("syntax error near unexpected token");
 		}
-		else if (get_type_tokken(ptr->key) == 6)
+		else if (get_type_tokken(list->key) == 6)
 		{
-			str = add_cmd_arg(str, ptr->value);
+			ft_lstadd_back(&str, ft_lstnew(list->key, list->value));
 		}
 		else if (get_type_tokken(list->key) == 5)
 		{
-			if (open_rd)
+			if (!list->next || get_type_tokken(list->next->key) != 6)
+				write_error("syntax error near unexpected token");
+			if (open_rd != NULL)
 				ft_lstadd_back(&(info->cmd_list), open_rd);
-			if (str)
-				ft_lstadd_back(&(info->cmd_list), ft_lstnew("word", str));
-			if (close_rd)
+			if (str != NULL)
+				ft_lstadd_back(&(info->cmd_list), ft_lstnew("word", lst_to_arr(str)));
+			if (close_rd != NULL)
 				ft_lstadd_back(&(info->cmd_list), close_rd);
 			ft_lstadd_back(&(info->cmd_list), ft_lstnew("|", NULL));
+			open_rd = NULL;
+			close_rd = NULL;
+			str = NULL;
+		}
+		if (list->next == NULL)
+		{
+			if (open_rd != NULL)
+				ft_lstadd_back(&(info->cmd_list), open_rd);
+			if (str != NULL)
+				ft_lstadd_back(&(info->cmd_list), ft_lstnew("word", lst_to_arr(str)));
+			if (close_rd != NULL)
+				ft_lstadd_back(&(info->cmd_list), close_rd);
 			open_rd = NULL;
 			close_rd = NULL;
 			str = NULL;
@@ -112,12 +122,16 @@ void	parcer(t_info *info)
 			
 		list = list->next;
 	}
+	
 	while (info->cmd_list)
 	{
-		printf("cmd %s %s\n", info->cmd_list->key, info->cmd_list->value);
-		if (info->cmd_list->next == NULL)
-			break;
-		info->cmd_list = info->cmd_list->next;
+		if (get_type_tokken(info->cmd_list->key) == 6)
+		{
+			print_mass(info->cmd_list->value);
+		}
+		else
+			printf("tokken %s %s\n", info->cmd_list->key, info->cmd_list->value);
+			info->cmd_list = info->cmd_list->next;
 	}
 	
 }

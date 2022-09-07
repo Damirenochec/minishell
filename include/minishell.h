@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:19:02 by paolives          #+#    #+#             */
-/*   Updated: 2022/09/04 08:16:15 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/07 06:53:05 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	lexer(char *str, t_info *info);
 
 
 // parcer.c
+int	get_type_tokken(char *tokken);
 void	parcer(t_info *info);
 
 // src.c
@@ -77,6 +78,10 @@ void	delite_space(t_info *info);
 void	executor(t_list *cmd_list);
 size_t	ft_has_builtin(t_list *cmd_list);
 void	ft_exec_buitin(t_list *cmd_list);
+
+//minishell.c
+
+void	free_array(char **str);
 
 
 #endif

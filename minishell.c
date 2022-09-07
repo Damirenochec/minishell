@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:58:52 by paolives          #+#    #+#             */
-/*   Updated: 2022/09/04 15:28:42 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/07 06:55:18 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,17 @@ char	*write_error(char *error)
 {
 	printf("%s\n", error);
 	return (NULL);
+}
+
+void	free_array(char **str)
+{
+	while (*str)
+	{
+		free(*str);
+		str++;
+	}
+	free(str);
+	
 }
 
 int	main(int argc, char **argv, char **env)
@@ -45,15 +56,9 @@ int	main(int argc, char **argv, char **env)
 			add_history(a);
 			lexer(a, info);
 			parcer(info);
-			ptr = info->start;
-			while (ptr)
-			{
-				printf("%s %s\n", ptr->key, ptr->value);
-				ptr = ptr->next;
-			}
-			ptr = NULL;
 			free(a);
 			free_list(info->start, 1);
+			free_list(info->cmd_list, 3);
 			info->start = NULL;
 		}
 	}
