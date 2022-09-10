@@ -6,31 +6,66 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 08:48:34 by paolives          #+#    #+#             */
-/*   Updated: 2022/09/07 06:51:46 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/10 07:31:32 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-void	free_list(t_list *list, int i)
+void	free_list(t_list *list)
 {
 	t_list	*ptr;
 
 	while (list != NULL)
 	{
-		if (i == 2 && list->key != NULL)
-			free(list->key);
-		if (i == 3 && get_type_tokken(list->key) == 6)
-		{
-			free_array(list->value);
-		}	
-		else if (list->value != NULL)
+		if (list->value != NULL)
 			free(list->value);
 		ptr = list;
 		list = list->next;
-		ptr->next = NULL;
 		free(ptr);
 	}
+}
+
+void	free_env(t_list *list)
+{
+	t_list	*ptr;
+	while (list != NULL)
+	{
+		free(list->key);
+		free(list->value);
+		ptr = list;
+		list = list->next;
+		free(ptr);
+	}
+	
+}
+
+void	free_cmd(t_list *list)
+{
+	t_list	*ptr;
+
+	
+	while (list)
+	{
+		ptr = list;
+		if (get_type_tokken(list->key) == 6)
+			free(list->value);
+		list = list->next;
+		free(ptr);
+	}
+}
+
+void	free_str(t_list *list)
+{
+	t_list	*ptr;
+
+	while (list)
+	{
+		ptr = list;
+		free(ptr);
+		list = list->next;
+	}
+	
 }
 
 void	parce_env(t_info *info)

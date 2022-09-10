@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:58:52 by paolives          #+#    #+#             */
-/*   Updated: 2022/09/07 06:55:18 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/10 09:34:13 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,13 @@ char	*write_error(char *error)
 	return (NULL);
 }
 
-void	free_array(char **str)
+void print_mass(char **str)
 {
 	while (*str)
 	{
-		free(*str);
+		printf("mass %s\n", *str);
 		str++;
 	}
-	free(str);
 	
 }
 
@@ -37,6 +36,7 @@ int	main(int argc, char **argv, char **env)
 	char	*a;
 	t_info	*info;
 	t_list	*ptr;
+	t_list	*list;
 	int		i;
 
 	i = 0;
@@ -56,13 +56,23 @@ int	main(int argc, char **argv, char **env)
 			add_history(a);
 			lexer(a, info);
 			parcer(info);
+			
+			
+			list = info->cmd_list;
+			while (list)
+			{
+				if (get_type_tokken(list->key) == 6)
+					print_mass(list->value);
+				else
+					printf("tokken %s %s\n", list->key, list->value);
+				list = list->next;
+			}
 			free(a);
-			free_list(info->start, 1);
-			free_list(info->cmd_list, 3);
-			info->start = NULL;
+			free_list(info->start);
+			free_cmd(info->cmd_list);
 		}
 	}
-	free_list(info->env_list, 2);
-	free(info);
+	free_env(info->env_list);
+			free(info);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 22:36:22 by paolives          #+#    #+#             */
-/*   Updated: 2022/09/07 05:55:33 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/10 09:36:11 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,11 @@ char	**lst_to_arr(t_list *list)
 	return (ptr);
 }
 
-void print_mass(char **str)
-{
-	while (*str)
-	{
-		printf("mass %s\n", *str);
-		str++;
-	}
-	
-}
+// t_list	*parce_redirect(t_list *list)
+// {
+// 	if (list->next && get_type_tokken(list->next->key) == 6)
+// }
+
 
 void	parcer(t_info *info)
 {
@@ -92,7 +88,7 @@ void	parcer(t_info *info)
 		{
 			ft_lstadd_back(&str, ft_lstnew(list->key, list->value));
 		}
-		else if (get_type_tokken(list->key) == 5)
+		else if (get_type_tokken(list->key) == 5 || list->next == NULL)
 		{
 			if (!list->next || get_type_tokken(list->next->key) != 6)
 				write_error("syntax error near unexpected token");
@@ -105,6 +101,7 @@ void	parcer(t_info *info)
 			ft_lstadd_back(&(info->cmd_list), ft_lstnew("|", NULL));
 			open_rd = NULL;
 			close_rd = NULL;
+			free_str(str);
 			str = NULL;
 		}
 		if (list->next == NULL)
@@ -115,23 +112,14 @@ void	parcer(t_info *info)
 				ft_lstadd_back(&(info->cmd_list), ft_lstnew("word", lst_to_arr(str)));
 			if (close_rd != NULL)
 				ft_lstadd_back(&(info->cmd_list), close_rd);
+			
 			open_rd = NULL;
 			close_rd = NULL;
+			free_str(str);
 			str = NULL;
 		}
 			
 		list = list->next;
-	}
-	
-	while (info->cmd_list)
-	{
-		if (get_type_tokken(info->cmd_list->key) == 6)
-		{
-			print_mass(info->cmd_list->value);
-		}
-		else
-			printf("tokken %s %s\n", info->cmd_list->key, info->cmd_list->value);
-			info->cmd_list = info->cmd_list->next;
 	}
 	
 }

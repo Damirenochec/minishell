@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:19:02 by paolives          #+#    #+#             */
-/*   Updated: 2022/09/07 06:53:05 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/10 07:32:03 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,12 @@ void	parcer(t_info *info);
 
 t_info	*make_info(char **env);
 char	*write_error(char *error);
-void	free_list(t_list *list, int i);
+void	free_list(t_list *list);
 void	*envp_search(char *str, t_list *list);
 int		ft_strichr(const char *s, int c);
+void	free_env(t_list *list);
+void	free_cmd(t_list *list);
+void	free_str(t_list *list);
 
 // stringsthings.c
 char	*cutsubstr(char *str, int cut, int end);
