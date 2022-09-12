@@ -6,7 +6,7 @@
 #    By: paolives <paolives@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/26 09:04:28 by paolives          #+#    #+#              #
-#    Updated: 2022/06/30 13:38:38 by paolives         ###   ########.fr        #
+#    Updated: 2022/09/12 13:23:47 by paolives         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ HEADER = libft.h
 OBJ = $(patsubst %.c, %.o, $(SRCS))
 #
 CC	=	cc
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -g -Wall -Wextra -Werror 
 #
 .PHONY : all clean fclean re
 #

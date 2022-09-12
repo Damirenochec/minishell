@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:58:52 by paolives          #+#    #+#             */
-/*   Updated: 2022/09/10 09:34:13 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/12 13:30:38 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int	main(int argc, char **argv, char **env)
 			free(a);
 			free_list(info->start);
 			free_cmd(info->cmd_list);
+			info->start = NULL;
+			info->cmd_list = NULL;
 		}
 	}
 	free_env(info->env_list);
