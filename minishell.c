@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:58:52 by paolives          #+#    #+#             */
-/*   Updated: 2022/09/12 13:30:38 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/12 17:00:52 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,20 @@ void print_mass(char **str)
 	
 }
 
-int	main(int argc, char **argv, char **env)
+int	main(int argc, char **env)
 {
 	char	*a;
 	t_info	*info;
-	t_list	*ptr;
-	t_list	*list;
-	int		i;
+	//t_list *list;
 
-	i = 0;
 	if (argc != 1)
 	{
 		write_error("Wrong number of arguments");
 	}
 	info = make_info(env);
-	while (a = readline("my_shell->"))
+	while (1)
 	{
+		a = readline("my_shell->");
 		if (a == NULL)
 			return (0);
 		else if (*a == '\0')
@@ -57,16 +55,15 @@ int	main(int argc, char **argv, char **env)
 			lexer(a, info);
 			parcer(info);
 			
-			
-			list = info->cmd_list;
-			while (list)
-			{
-				if (get_type_tokken(list->key) == 6)
-					print_mass(list->value);
-				else
-					printf("tokken %s %s\n", list->key, list->value);
-				list = list->next;
-			}
+			// list = info->cmd_list;
+			// while (list)
+			// {
+			// 	if (get_type_tokken(list->key) == 6)
+			// 		print_mass(list->value);
+			// 	else
+			// 		printf("tokken %s %s\n", (char*)list->key, (char*)list->value);
+			// 	list = list->next;
+			// }
 			free(a);
 			free_list(info->start);
 			free_cmd(info->cmd_list);

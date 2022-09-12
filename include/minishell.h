@@ -6,19 +6,19 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:19:02 by paolives          #+#    #+#             */
-/*   Updated: 2022/09/10 07:32:03 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/12 16:55:58 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include <stdio.h>
+# include <stdio.h>
 //#include <io.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdlib.h>
-#include "../libft/libft.h"
+# include<readline/readline.h>
+# include <readline/history.h>
+# include <stdlib.h>
+# include "../libft/libft.h"
 # define SUCCESS 0
 # define ERROR 1
 # define PATH_MAX 4096
@@ -33,7 +33,6 @@
 //     int             envp_flag;
 //     char            exit_t;
 //     int             status;
-    
 // }   t_info;
 
 typedef struct s_info
@@ -50,12 +49,11 @@ int		parce_quotes(char *quotes, char *str, int i, t_info *info);
 int		parce_angle_brackets(char *brackets, char *str, int i, t_info *info);
 int		parce_word(char *str, int i, t_info *info);
 int		parce_space(char *str, int i, t_info *info);
-char	*parce_dollar(char *str,t_info *info);
+char	*parce_dollar(char *str, t_info *info);
 void	lexer(char *str, t_info *info);
 
-
 // parcer.c
-int	get_type_tokken(char *tokken);
+int		get_type_tokken(char *tokken);
 void	parcer(t_info *info);
 
 // src.c
@@ -76,12 +74,9 @@ char	*replacesubstr(char *str, int start, int end, char *sub);
 void	concatenation_strings(t_info *info);
 void	delite_space(t_info *info);
 
-
 // executor
-
 void	executor(t_list *cmd_list);
 size_t	ft_has_builtin(t_list *cmd_list);
-
 
 // built-ins
 void	ft_exec_builtin(t_list *cmd_list);
@@ -89,8 +84,6 @@ int		ft_echo(t_list *cmd_list);
 int		ft_pwd(void);
 
 //minishell.c
-
 void	free_array(char **str);
-
 
 #endif

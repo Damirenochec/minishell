@@ -6,13 +6,15 @@
 #    By: paolives <paolives@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 12:29:29 by paolives          #+#    #+#              #
-#    Updated: 2022/09/04 08:43:41 by paolives         ###   ########.fr        #
+#    Updated: 2022/09/12 16:53:45 by paolives         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
 
-SRCS	=	minishell.c parcer/lexer.c parcer/parcer.c parcer/parce_tokken.c parcer/parce_dollar.c src.c stringsthings.c
+SRCS	=	minishell.c parcer/lexer.c parcer/parcer.c\
+			parcer/parce_tokken.c parcer/parce_dollar.c\
+			src.c stringsthings.c 
 
 OBJ		=	$(SRCS:%.c=%.o)
 
@@ -26,7 +28,7 @@ HEADER	=	minishell.h
 
 CC = gcc
 
-FLAGS	=	-g #-Wall -Wextra -Werror 
+FLAGS	=	-g -Wall -Wextra -Werror 
 
 RM		= rm -rf
 

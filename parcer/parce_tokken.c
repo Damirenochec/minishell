@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 08:17:26 by paolives          #+#    #+#             */
-/*   Updated: 2022/09/04 08:58:43 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/12 16:46:28 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	parce_quotes(char *quotes, char *str, int i, t_info *info)
 {
 	int		j;
 	char	*new_str;
-	char	*ptr;
 
 	j = i;
 	while (str[++i])
@@ -58,7 +57,6 @@ int	parce_word(char *str, int i, t_info *info)
 {
 	int		j;
 	char	*new_str;
-	char	*ptr;
 
 	j = i;
 	while (str[i++])
@@ -70,7 +68,6 @@ int	parce_word(char *str, int i, t_info *info)
 			|| str[i] == ' ')
 		{
 			new_str = ft_substr(str, j, i - j);
-			ptr = new_str;
 			new_str = parce_dollar(new_str, info);
 			ft_lstadd_back(&(info->start), ft_lstnew("word", new_str));
 			i--;

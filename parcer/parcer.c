@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 22:36:22 by paolives          #+#    #+#             */
-/*   Updated: 2022/09/10 09:36:11 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/12 16:59:25 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,79 +47,72 @@ char	**lst_to_arr(t_list *list)
 	return (ptr);
 }
 
-// t_list	*parce_redirect(t_list *list)
-// {
-// 	if (list->next && get_type_tokken(list->next->key) == 6)
-// }
+t_list	*parce_redir(t_list *list, t_list **open_rd, t_list **close_rd)
+{
+	if (list->next && get_type_tokken(list->next->key) == 6)
+	{
+		if (get_type_tokken(list->key) == 2 || get_type_tokken(list->key) == 4)
+			ft_lstadd_back(open_rd, ft_lstnew(list->key, list->next->value));
+		else
+			ft_lstadd_back(close_rd, ft_lstnew(list->key, list->next->value));
+		list = list->next;
+	}
+	else
+		write_error("syntax error near unexpected token");
+	return (list);
+}
 
+void	parce_end_cmd(t_info *info, t_list **open_rd,
+	t_list **str, t_list **close_rd)
+{
+	if (*open_rd != NULL)
+		ft_lstadd_back(&(info->cmd_list), *open_rd);
+	if (*str != NULL)
+		ft_lstadd_back(&(info->cmd_list), ft_lstnew("word", lst_to_arr(*str)));
+	if (*close_rd != NULL)
+		ft_lstadd_back(&(info->cmd_list), *close_rd);
+	*open_rd = NULL;
+	*close_rd = NULL;
+	free_str(*str);
+	*str = NULL;
+}
+
+t_list	*start_parcer(t_info *info, t_list **open_rd,
+	t_list **str, t_list **close_rd)
+{
+	t_list	*list;
+
+	list = info->start;
+	*str = NULL;
+	*open_rd = NULL;
+	*close_rd = NULL;
+	return (list);
+}
 
 void	parcer(t_info *info)
 {
 	t_list	*list;
 	t_list	*open_rd;
 	t_list	*close_rd;
-	t_list	*ptr;
 	t_list	*str;
-	int		i;
-	int		j;
 
-	list = info->start;
-	str = NULL;
-	open_rd = NULL;
-	close_rd = NULL;
+	list = start_parcer(info, &open_rd, &str, &close_rd);
 	if (get_type_tokken(list->key) == 5)
 		write_error("syntax error near unexpected token \'|\'");
 	while (list)
 	{
 		if (get_type_tokken(list->key) >= 1 && get_type_tokken(list->key) <= 4)
-		{
-			if (list->next && get_type_tokken(list->next->key) == 6)
-			{
-				if (get_type_tokken(list->key) == 2 || get_type_tokken(list->key) == 4)
-					ft_lstadd_back(&open_rd, ft_lstnew(list->key, list->next->value));
-				else
-					ft_lstadd_back(&close_rd, ft_lstnew(list->key, list->next->value));
-				list = list->next;
-			}
-			else
-				write_error("syntax error near unexpected token");
-		}
+			list = parce_redir(list, &open_rd, &close_rd);
 		else if (get_type_tokken(list->key) == 6)
-		{
 			ft_lstadd_back(&str, ft_lstnew(list->key, list->value));
-		}
-		else if (get_type_tokken(list->key) == 5 || list->next == NULL)
+		if (get_type_tokken(list->key) == 5 || list->next == NULL)
 		{
-			if (!list->next || get_type_tokken(list->next->key) != 6)
+			if (!list->next && get_type_tokken(list->key) == 5)
 				write_error("syntax error near unexpected token");
-			if (open_rd != NULL)
-				ft_lstadd_back(&(info->cmd_list), open_rd);
-			if (str != NULL)
-				ft_lstadd_back(&(info->cmd_list), ft_lstnew("word", lst_to_arr(str)));
-			if (close_rd != NULL)
-				ft_lstadd_back(&(info->cmd_list), close_rd);
-			ft_lstadd_back(&(info->cmd_list), ft_lstnew("|", NULL));
-			open_rd = NULL;
-			close_rd = NULL;
-			free_str(str);
-			str = NULL;
+			parce_end_cmd(info, &open_rd, &str, &close_rd);
+			if (get_type_tokken(list->key) == 5)
+				ft_lstadd_back(&(info->cmd_list), ft_lstnew("|", NULL));
 		}
-		if (list->next == NULL)
-		{
-			if (open_rd != NULL)
-				ft_lstadd_back(&(info->cmd_list), open_rd);
-			if (str != NULL)
-				ft_lstadd_back(&(info->cmd_list), ft_lstnew("word", lst_to_arr(str)));
-			if (close_rd != NULL)
-				ft_lstadd_back(&(info->cmd_list), close_rd);
-			
-			open_rd = NULL;
-			close_rd = NULL;
-			free_str(str);
-			str = NULL;
-		}
-			
 		list = list->next;
 	}
-	
 }

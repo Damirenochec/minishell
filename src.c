@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 08:48:34 by paolives          #+#    #+#             */
-/*   Updated: 2022/09/10 07:31:32 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/12 16:47:22 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ t_info	*make_info(char **env)
 	parce_env(info);
 	info->start = NULL;
 	info->status = 0;
+	return (info);
 }
 
 void	*envp_search(char *str, t_list *list)
