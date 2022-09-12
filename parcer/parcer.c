@@ -6,29 +6,11 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 22:36:22 by paolives          #+#    #+#             */
-/*   Updated: 2022/09/12 16:59:25 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/12 17:31:27 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int	get_type_tokken(char *tokken)
-{
-	if (!ft_strncmp(tokken, ">", 1))
-		return (1);
-	else if (!ft_strncmp(tokken, "<", 1))
-		return (2);
-	else if (!ft_strncmp(tokken, ">>", 2))
-		return (3);
-	else if (!ft_strncmp(tokken, "<<", 2))
-		return (4);
-	else if (!ft_strncmp(tokken, "|", 1))
-		return (5);
-	else if (!ft_strncmp(tokken, "word", 4))
-		return (6);
-	else
-		return (0);
-}
 
 char	**lst_to_arr(t_list *list)
 {

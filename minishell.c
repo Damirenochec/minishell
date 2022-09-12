@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:58:52 by paolives          #+#    #+#             */
-/*   Updated: 2022/09/12 17:00:52 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/12 17:15:02 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,27 @@ void print_mass(char **str)
 		str++;
 	}
 	
+}
+
+void	print_lst_tokken(t_list *list)
+{
+	while (list)
+	{
+		printf("%s %s\n", (char*)list->key, (char*)list->value);
+		list = list->next;
+	}
+}
+
+void	print_lst_cmd(t_list *list)
+{
+	while (list)
+	{
+		if (get_type_tokken(list->key) == 6)
+			print_mass(list->value);
+		else
+			printf("tokken %s %s\n", (char*)list->key, (char*)list->value);
+		list = list->next;
+	}
 }
 
 int	main(int argc, char **env)
@@ -55,15 +76,8 @@ int	main(int argc, char **env)
 			lexer(a, info);
 			parcer(info);
 			
-			// list = info->cmd_list;
-			// while (list)
-			// {
-			// 	if (get_type_tokken(list->key) == 6)
-			// 		print_mass(list->value);
-			// 	else
-			// 		printf("tokken %s %s\n", (char*)list->key, (char*)list->value);
-			// 	list = list->next;
-			// }
+			print_lst_cmd(info->cmd_list);
+			
 			free(a);
 			free_list(info->start);
 			free_cmd(info->cmd_list);

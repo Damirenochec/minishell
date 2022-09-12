@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:19:02 by paolives          #+#    #+#             */
-/*   Updated: 2022/09/12 16:55:58 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/12 17:32:35 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,28 +44,42 @@ typedef struct s_info
 	int		status;
 }	t_info;
 
-// lexer.c
+//parce_dollar.c
+
+char	*parce_exit_status_pid(char *str, int i, t_info *info);
+char	*parce_dollar_digit(char *str, int i);
+char	*parce_dollar_env(char *str, int i, t_info *info);
+char	*parce_dollar(char *str, t_info *info);
+
+//parce_tokken.c
 int		parce_quotes(char *quotes, char *str, int i, t_info *info);
 int		parce_angle_brackets(char *brackets, char *str, int i, t_info *info);
 int		parce_word(char *str, int i, t_info *info);
 int		parce_space(char *str, int i, t_info *info);
-char	*parce_dollar(char *str, t_info *info);
+
+// lexer.c
 void	lexer(char *str, t_info *info);
 
 // parcer.c
-int		get_type_tokken(char *tokken);
+char	**lst_to_arr(t_list *list);
+t_list	*parce_redir(t_list *list, t_list **open_rd, t_list **close_rd);
+void	parce_end_cmd(t_info *info, t_list **open_rd,
+			t_list **str, t_list **close_rd);
+t_list	*start_parcer(t_info *info, t_list **open_rd,
+			t_list **str, t_list **close_rd);
 void	parcer(t_info *info);
 
-// src.c
-
-t_info	*make_info(char **env);
-char	*write_error(char *error);
+//free.c
 void	free_list(t_list *list);
-void	*envp_search(char *str, t_list *list);
-int		ft_strichr(const char *s, int c);
 void	free_env(t_list *list);
 void	free_cmd(t_list *list);
 void	free_str(t_list *list);
+
+// src.c
+t_info	*make_info(char **env);
+char	*write_error(char *error);
+void	*envp_search(char *str, t_list *list);
+int		get_type_tokken(char *tokken);
 
 // stringsthings.c
 char	*cutsubstr(char *str, int cut, int end);
@@ -84,6 +98,5 @@ int		ft_echo(t_list *cmd_list);
 int		ft_pwd(void);
 
 //minishell.c
-void	free_array(char **str);
 
 #endif
