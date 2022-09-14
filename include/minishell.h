@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:19:02 by paolives          #+#    #+#             */
-/*   Updated: 2022/09/12 17:32:35 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/14 15:04:12 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,6 @@ int		ft_echo(t_list *cmd_list);
 int		ft_pwd(void);
 
 //minishell.c
+void	my_sig_ctrl_c(int i);
 
 #endif

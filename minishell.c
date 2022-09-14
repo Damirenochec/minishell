@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:58:52 by paolives          #+#    #+#             */
-/*   Updated: 2022/09/12 17:15:02 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/14 15:05:30 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,22 @@ void	print_lst_cmd(t_list *list)
 	}
 }
 
+void	my_sig_ctrl_c(int i)
+{
+	if (i == SIGINT)
+	{
+		ft_putstr_fd("\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		rl_redisplay();
+	}
+}
+
 int	main(int argc, char **env)
 {
 	char	*a;
 	t_info	*info;
+	//int	i = 0;
 	//t_list *list;
 
 	if (argc != 1)
@@ -63,11 +75,12 @@ int	main(int argc, char **env)
 		write_error("Wrong number of arguments");
 	}
 	info = make_info(env);
+	signal(SIGINT, my_sig_ctrl_c);
 	while (1)
 	{
 		a = readline("my_shell->");
 		if (a == NULL)
-			return (0);
+			break;
 		else if (*a == '\0')
 			free(a);
 		else
@@ -86,6 +99,6 @@ int	main(int argc, char **env)
 		}
 	}
 	free_env(info->env_list);
-			free(info);
+	free(info);
 	return (0);
 }
