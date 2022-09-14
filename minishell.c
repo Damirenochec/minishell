@@ -6,7 +6,7 @@
 /*   By: paolives <paolives@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 12:58:52 by paolives          #+#    #+#             */
-/*   Updated: 2022/09/14 15:05:30 by paolives         ###   ########.fr       */
+/*   Updated: 2022/09/14 15:07:10 by paolives         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	main(int argc, char **env)
 			lexer(a, info);
 			parcer(info);
 			
-			print_lst_cmd(info->cmd_list);
+			//print_lst_cmd(info->cmd_list);
 			
 			free(a);
 			free_list(info->start);
