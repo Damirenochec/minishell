@@ -28,7 +28,7 @@ SRCS	=	ft_bzero.c		ft_isalnum.c	ft_isalpha.c\
 			ft_lstdelone_bonus.c	ft_lstiter_bonus.c\
 			ft_lstlast_bonus.c	ft_lstmap_bonus.c\
 			ft_lstnew_bonus.c	ft_lstsize_bonus.c\
-			get_next_line.c
+			get_next_line.c	ft_memdel.c
 #
 HEADER = libft.h
 OBJ = $(patsubst %.c, %.o, $(SRCS))
