@@ -48,3 +48,12 @@ int	ft_is_in_env(t_list *env_list, char *env_key, char *env_value)
 	}
 	return (SUCCESS);
 }
+
+int	ft_export(t_list *cmd_list, t_list *env_list)
+{
+	int	new_env;
+	int	error_ret;
+
+	new_env = 0;
+	if ()
+}
